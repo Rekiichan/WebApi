@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using testwebApi.Models;
+
 namespace testwebApi
 {
     public class Program
@@ -7,8 +10,9 @@ namespace testwebApi
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers();
+            builder.Services.AddDbContext<TodoContext>(opt =>
+                opt.UseInMemoryDatabase("TodoList"));
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -18,6 +22,7 @@ namespace testwebApi
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
